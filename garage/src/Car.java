@@ -1,6 +1,6 @@
 public class Car extends Vehicle {
 
-    private String steeringWheel;
+    public String steeringWheel;
 
     Car(String engine, int wheels, int seat, String colour, String steeringWheel) {
         super(engine, wheels, seat, colour);

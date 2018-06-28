@@ -1,4 +1,4 @@
-public class Vehicle {
+public abstract class Vehicle {
 
     // Setup Vehicle attributes
     private String engine;
@@ -16,6 +16,5 @@ public class Vehicle {
     public String toString() {
         return "Engine: " + this.engine + "Wheels: " + this.wheels + "Seat: " + this.seat + "Colours: " + this.colour;
     }
-
 
 }

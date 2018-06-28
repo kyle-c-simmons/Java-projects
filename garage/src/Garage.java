@@ -3,37 +3,28 @@ import java.util.ArrayList;
 
 public class Garage {
 
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
+    ArrayList<Vehicle> inGarage = new ArrayList<>();
 
-    Car mustang = new Car("v8", 4, 3, "yellow", "black");
-    Car focus = new Car("v8", 4, 5, "blue", "black");
-    Car bmw = new Car("v8", 4, 5, "blue", "black");
+    public void addVehicle(Vehicle v) {
+        inGarage.add(v);
+    }
 
-    Motorcycle m1 = new Motorcycle("v8", 2, 1, "green",1);
-    Motorcycle m2 = new Motorcycle("v8", 2, 1, "silver", 1);
+    public void emptyGarage(Vehicle v) {
+        inGarage.remove(v);
+    }
 
-    // Display cars/motorcycles  objects
-    public void displayVehicles() {
+    public void calculateBill() {
+        for(Vehicle vehicleList: inGarage) {
+            //System.out.println(vehicleList);
 
-        vehicles.add(mustang);
-        vehicles.add(focus);
-        vehicles.add(bmw);
-        vehicles.add(m1);
-        vehicles.add(m2);
+            if(vehicleList instanceof Car) {
+                ((Car) vehicleList).steeringWheel = "20";
+            }
+            else if(vehicleList instanceof Motorcycle) {
+                ((Motorcycle) vehicleList).chair = 40;
+            }
+        }
 
-        for(Vehicle vehicleList: vehicles) {
-        System.out.println(vehicleList);
     }
 }
 
-
-
-
-
-    // Create method remove vehicle
-
-    // Fix Vehicle method
-
-    // Empty garage
-
-}

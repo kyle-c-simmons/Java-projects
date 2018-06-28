@@ -1,6 +1,6 @@
 public class Motorcycle extends Vehicle {
 
-    private int chair;
+    public int chair;
 
     Motorcycle(String engine, int wheels, int seat, String colour, int chair) {
         super(engine, wheels, seat, colour);
