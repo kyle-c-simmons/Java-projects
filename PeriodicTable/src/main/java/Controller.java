@@ -93,7 +93,7 @@ public class Controller {
             }
 
             /*
-            If a word has already used a letter, then the next work will skip it.
+            If a word has already used a letter, then the next word will skip it.
              */
             else {
                 for (String w : words) {
