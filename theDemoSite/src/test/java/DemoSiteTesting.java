@@ -1,15 +1,21 @@
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+
 import static org.junit.Assert.*;
 
 public class DemoSiteTesting {
 
     ChromeDriver driver;
-    String url = "https://thedemosite.co.uk/";
+    ExtentReports report = new ExtentReports("C:/Users/Admin/Desktop/Basicreport.html", true);
+    ExtentTest test;
 
     @Before
     public void setup() {
@@ -23,48 +29,43 @@ public class DemoSiteTesting {
         driver.quit();
     }
 
+    /*
+    1) Go to home page
+    2) Create a user
+    3) Login
+     */
     @Test
-    public void methodTest() throws InterruptedException {
+    public void test() throws InterruptedException {
         driver.manage().window().maximize();
-        driver.get(url);
 
-        // Create user
-        WebElement clickAddUser = driver.findElement(By.partialLinkText("Add a User"));
-        clickAddUser.click();
-        Thread.sleep(1000);
+        test = report.startTest("Verify user can create account");
+        test.log(LogStatus.INFO, "Browser started");
 
-        WebElement clickUserName = driver.findElement(By.name("username"));
-        clickUserName.sendKeys("user");
-        Thread.sleep(1000);
+        // Home page
+        driver.get("https://thedemosite.co.uk/");
+        DemoHomePage homePage = PageFactory.initElements(driver, DemoHomePage.class);
+        homePage.clickAddUserPage();
+        test.log(LogStatus.PASS, "verify that the user can create an account");
 
-        WebElement clickPassword = driver.findElement(By.name("password"));
-        clickPassword.sendKeys("password");
-        Thread.sleep(1000);
 
-        WebElement clickSubmit = driver.findElement(By.name("FormsButton2"));
-        clickSubmit.click();
-        Thread.sleep(1000);
+        // Add user page
+        driver.get("https://thedemosite.co.uk/addauser.php");
+        DemoAdduserPage adduserPage = PageFactory.initElements(driver, DemoAdduserPage.class);
+
+        adduserPage.setEnterUsername("Username");
+        adduserPage.setEnterPasswordl("Password");
+        adduserPage.clickSubmitAdduser();
 
         // Login
-        WebElement clickLogin = driver.findElement(By.partialLinkText("Login"));
-        clickLogin.click();
-        Thread.sleep(1000);
+        driver.get("https://thedemosite.co.uk/login.php");
+        DemoLoginPage loginPage = PageFactory.initElements(driver, DemoLoginPage.class);
 
-        WebElement enterUser = driver.findElement(By.name("username"));
-        enterUser.sendKeys("user");
-        Thread.sleep(1000);
+        loginPage.enterUsername("Username");
+        loginPage.enterPassword("Password");
+        loginPage.loginUser();
 
-        WebElement enterPass = driver.findElement(By.name("password"));
-        enterPass.sendKeys("password");
-        Thread.sleep(1000);
-
-        WebElement login = driver.findElement(By.name("FormsButton2"));
-        login.click();
-        Thread.sleep(1000);
-
-        WebElement getSuccess = driver.findElement(By.xpath("//font/center"));
-
-        assertEquals("**Successful Login**", getSuccess.getText());
+        report.endTest(test);
+        report.flush();
 
     }
 
